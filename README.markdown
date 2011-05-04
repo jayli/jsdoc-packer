@@ -1,6 +1,6 @@
 # JSDOC 辅助脚本
 
-jsdoc 生成js文档的辅助脚本，解决生成文档乱码问题，for linux only
+jsdoc 生成js文档的辅助脚本，过滤掉"-min.js"文件，解决生成文档乱码问题，for linux only
 
 - Created by [拔赤](http://jayli.github.com)
 - License: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
