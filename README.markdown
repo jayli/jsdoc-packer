@@ -16,6 +16,7 @@ jsdoc 生成js文档的辅助脚本，过滤掉"-min.js"文件，解决生成文
 	
 	sudo chmod 777 /usr/bin/jsdoc
 
+
 ## 脚本执行
 
 运行
