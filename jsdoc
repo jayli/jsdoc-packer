@@ -1,0 +1,66 @@
+#!/bin/bash
+# created by bachi@taobao.com
+# jsdoc
+#	生成文档
+#		jsdoc src(原目录) doc(目标目录)
+# 
+
+# isEnc file.name gbk && echo 'gbk'
+# isEnc file.name utf8 && echo 'utf8'
+isEnc () {
+	local temp=`iconv -f $2 $1 1>/dev/null 2>/dev/null && echo 'true'`;
+	if [ "$temp" = 'true' ]; then
+		return 0;
+	fi;
+	return 1;
+}
+
+moveOneFile () {
+	FILENAME=$1;
+	path=$(dirname $FILENAME)
+	mkdir tmp_jsdoc_jayli/$path -p
+	isEnc ${FILENAME} gb18030 && iconv -f GB18030 -t UTF-8 ${FILENAME} -o tmp_jsdoc_jayli/${FILENAME}
+	isEnc ${FILENAME} utf8 && cp ${FILENAME} tmp_jsdoc_jayli/${FILENAME}
+}
+
+showError(){
+	echo "命令格式:";
+	echo "$ jsdoc [源目录] [目标目录]";
+	exit;
+}
+
+
+if [ -z "$1" ];then
+	showError
+fi
+if [ -z "$2" ];then 
+	showError
+fi
+
+
+if [ ! -d $1 ]; then
+	echo "源目录不存在";
+	exit;
+fi
+
+if [ ! -d $2 ]; then
+	mkdir $2
+fi
+
+if [ -d tmp_jsdoc_jayli ];then
+	rm -rf tmp_jsdoc_jayli
+	mkdir tmp_jsdoc_jayli
+fi
+
+#寻找目录下所有的js文件，过滤掉-min.js
+find $1 -name '*.js' | grep -v "\-min.js" | sed -r 's/^\.\///' >  ___js_files
+
+while read FILENAME
+	do
+		moveOneFile $FILENAME
+done < ___js_files
+rm ___js_files
+
+java -jar /usr/local/lib/jsdoc-toolkit/jsrun.jar /usr/local/lib/jsdoc-toolkit/app/run.js -a -r -e=utf-8 -t=/usr/local/lib/jsdoc-toolkit/templates/jsdoc tmp_jsdoc_jayli -d=$2 
+
+rm tmp_jsdoc_jayli -rf
