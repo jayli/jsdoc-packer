@@ -62,6 +62,6 @@ while read FILENAME
 done < ___js_files
 rm ___js_files
 
-java -jar /usr/local/lib/jsdoc-toolkit/jsrun.jar /usr/local/lib/jsdoc-toolkit/app/run.js -a -r -e=utf-8 -t=/usr/local/lib/jsdoc-toolkit/templates/outline tmp_jsdoc_jayli -d=$2 
+java -jar /usr/local/lib/jsdoc-toolkit/jsrun.jar /usr/local/lib/jsdoc-toolkit/app/run.js -a -r -e=utf-8 -t=/usr/local/lib/jsdoc-toolkit/templates/jsdoc tmp_jsdoc_jayli -d=$2 
 
 rm tmp_jsdoc_jayli -rf
